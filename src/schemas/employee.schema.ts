@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Address } from './address.schema';
+import { Profile } from './profile.schema';
 
 @Schema({ timestamps: true })
 export class Employee extends Document {
@@ -10,10 +11,13 @@ export class Employee extends Document {
   @Prop({ type: Address })
   address: Address;
 
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Profile' })
+  profile: Profile;
+
   @Prop({ required: true, unique: true })
   employeeId: string;
 
-  @Prop({ required: true })
+  @Prop()
   designation: string;
 
   @Prop({ default: 0 })
