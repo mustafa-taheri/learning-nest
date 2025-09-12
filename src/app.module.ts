@@ -6,9 +6,18 @@ import { ProductService } from './product/product.service';
 import { ProductController } from './product/product.controller';
 import { EmployeeModule } from './employee/employee.module';
 import { CategoryModule } from './category/category.module';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { StudentModule } from './student/student.module';
 
 @Module({
-  imports: [EmployeeModule, CategoryModule],
+  imports: [
+    EmployeeModule,
+    CategoryModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRoot(process.env.DB_URL!),
+    StudentModule,
+  ],
   controllers: [AppController, UserController, ProductController],
   providers: [AppService, ProductService],
 })
